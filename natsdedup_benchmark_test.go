@@ -7,12 +7,21 @@ import (
 	"time"
 
 	"github.com/claudiunicolaa/natsdedup"
+	"github.com/nats-io/nats-server/v2/test"
 	"github.com/nats-io/nats.go"
 )
 
+// BenchmarkNatsDedup benchmarks the deduplicator connected toa the test NATS server.
 func BenchmarkNatsDedup(b *testing.B) {
-	// Connect to NATS server
-	nc, err := nats.Connect(nats.DefaultURL)
+	// Start a test NATS server for testing
+	natsServer := test.RunDefaultServer()
+	defer natsServer.Shutdown()
+
+	// Connect to the test NATS server
+	nc, err := nats.Connect(natsServer.ClientURL())
+	// Start a NATS server for testing
+	//nc, err = nats.Connect(nats.DefaultURL) // TODO: uncomment this line to test against a local NATS server
+	defer nc.Close()
 	if err != nil {
 		log.Fatalf("Error connecting to NATS server: %v", err)
 	}
