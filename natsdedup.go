@@ -52,7 +52,8 @@ func (d *Deduplicator) handleMessage(msg *nats.Msg, nc *nats.Conn) {
 	})
 
 	// Forward the message to the output subject
-	nc.Publish(d.OutputSubject, msg.Data)
+	// TODO: Handle errors here (e.g. if the output subject is invalid)
+	_ = nc.Publish(d.OutputSubject, msg.Data)
 }
 
 // Run starts the deduplicator, subscribing to the input subject and forwarding
