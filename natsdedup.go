@@ -1,3 +1,4 @@
+// Package natsdedup provides a deduplication solution for NATS messages.
 package natsdedup
 
 import (
@@ -7,6 +8,10 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
+// Deduplicator is a simple message deduplication mechanism for NATS messages.
+// It listens to messages on a specified input subject, deduplicates them
+// using a configurable time-to-live (TTL) cache, and forwards unique messages
+// to a specified output subject.
 type Deduplicator struct {
 	InputSubject     string
 	OutputSubject    string
@@ -15,6 +20,8 @@ type Deduplicator struct {
 	mux              sync.Mutex
 }
 
+// NewDeduplicator creates a new deduplicator with the specified input subject,
+// output subject, and deduplication TTL.
 func NewDeduplicator(inputSubject, outputSubject string, deduplicationTTL time.Duration) *Deduplicator {
 	return &Deduplicator{
 		InputSubject:     inputSubject,
@@ -24,6 +31,8 @@ func NewDeduplicator(inputSubject, outputSubject string, deduplicationTTL time.D
 	}
 }
 
+// handleMessage processes a received NATS message, deduplicates it, and
+// forwards unique messages to the output subject.
 func (d *Deduplicator) handleMessage(msg *nats.Msg, nc *nats.Conn) {
 	d.mux.Lock()
 	defer d.mux.Unlock()
@@ -46,6 +55,9 @@ func (d *Deduplicator) handleMessage(msg *nats.Msg, nc *nats.Conn) {
 	nc.Publish(d.OutputSubject, msg.Data)
 }
 
+// Run starts the deduplicator, subscribing to the input subject and forwarding
+// unique messages to the output subject. Pass a connected nats.Conn object to
+// interact with the NATS server.
 func (d *Deduplicator) Run(nc *nats.Conn) error {
 	_, err := nc.Subscribe(d.InputSubject, func(msg *nats.Msg) {
 		d.handleMessage(msg, nc)
