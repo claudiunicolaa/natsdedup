@@ -1,5 +1,7 @@
 # natsdedup
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/claudiunicolaa/natsdedup)](https://goreportcard.com/report/github.com/claudiunicolaa/natsdedup)
+
 `natsdedup` is a lightweight package for deduplicating messages on NATS subjects. 
 It listens to messages on a specified input subject, deduplicates them using a configurable time-to-live (TTL) cache, and forwards unique messages to a specified output subject.
 
