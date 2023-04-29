@@ -66,3 +66,7 @@ select {}
 
 ## Contributions
 If you are interested in contributing, please feel free to submit pull requests, report issues, or propose new ideas for the project.
+
+## Publications
+
+[Effortless NATS Message Deduplication in Go](https://dev.to/claudiunicolaa/effortless-nats-message-deduplication-in-go-2ohl)
