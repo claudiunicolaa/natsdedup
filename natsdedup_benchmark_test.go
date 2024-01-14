@@ -21,7 +21,6 @@ func BenchmarkNatsDedup(b *testing.B) {
 	nc, err := nats.Connect(natsServer.ClientURL())
 	// Start a NATS server for testing
 	//nc, err = nats.Connect(nats.DefaultURL) // TODO: uncomment this line to test against a local NATS server
-	defer nc.Close()
 	if err != nil {
 		log.Fatalf("Error connecting to NATS server: %v", err)
 	}
