@@ -66,6 +66,9 @@ select {}
 
 ```
 
+## Examples
+Example project [natsdedup-example](https://github.com/claudiunicolaa/natsdedup-example/tree/main).
+
 ## Contributions
 If you are interested in contributing, please feel free to submit pull requests, report issues, or propose new ideas for the project.
 
